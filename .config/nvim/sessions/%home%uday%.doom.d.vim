@@ -9,12 +9,24 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
 endif
 let s:shortmess_save = &shortmess
 set shortmess=aoO
+badd +15 config.el
+badd +88 init.el
+badd +1 packages.el
 argglobal
 %argdel
 $argadd config.el
 $argadd custom.el
 $argadd init.el
 $argadd packages.el
+edit config.el
+argglobal
+balt init.el
+let s:l = 41 - ((27 * winheight(0) + 19) / 38)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 41
+normal! 02|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
